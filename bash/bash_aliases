@@ -1,0 +1,59 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Bash Aliases
+#
+# Version: 0.1.00 | 2014-10-21
+# Author: Derek Ackley
+# Twitter: @nykc77
+# File Location: ~/.bash_aliases
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# --------------------------
+# General
+# --------------------------
+
+alias cls='clear; ls'             # clear screen and list file
+alias cp='cp -iv'                 # copy file interactive, verbose
+alias du='du -h'                  # disk usage
+alias grep='grep -ir'             # grep interactive, recursive
+alias h='history'                 # bash history
+alias hcl='history -c; clear'     # clear history and screen
+alias mv='mv -iv'                 # move file interactive
+alias rm='rm -i'                  # remove file interactive
+alias x='exit'                    # exit application
+
+# --------------------------
+# List aliases
+# --------------------------
+
+alias la='ls -la'                 # list in long format include (.)
+alias ll='ls -l'                  # list in long format
+alias ls='ls -GFh'                # display slash (/) colorized output
+
+alias lk='ls -lSr'                # sort by size (small to big)
+alias lc='ls -ltcr'               # sort by change time (old to new)
+alias lu='ls -ltur'               # sort by change time (new to old)
+alias lt='ls -ltr'                # sort by date (old to new)
+
+# --------------------------
+# Navigating directories
+# --------------------------
+
+alias ..='cd ..'                  # move up 1 directory
+alias ..2='cd ../..'              # move up 2 directories
+alias ..3='cd ../../..'           # move up 3 directories
+alias ..4='cd ../../../..'        # move up 4 directories
+alias ..5='cd ../../../../..'     # move up 5 directories
+
+alias cd1='cd ..'                 # move up 1 directory
+alias cd2='cd ../..'              # move up 2 directories
+alias cd3='cd ../../..'           # move up 3 directories
+alias cd4='cd ../../../..'        # move up 4 directories
+alias cd5='cd ../../../../..'     # move up 5 directories
+
+
+# --------------------------
+# Program aliases
+# --------------------------
+
+alias subl='sublime'                  # open sublime {filename}
+

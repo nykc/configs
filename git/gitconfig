@@ -1,0 +1,120 @@
+# ===================================================================
+#
+# Git-Config File
+# Version: 1.2.00 | 20141111
+# Author: Derek Ackley
+# Company: Nykc Studios
+# Twitter: @nykc77
+# File Location: ~/.gitconfig
+#
+# ===================================================================
+
+[github]
+  user = nykc
+[user]
+  name = Derek Ackley
+  email = dackley@nykc.net
+[core]
+  autocrlf = false
+  editor = vim
+  eol = lf
+  excludesfile = ~/.gitignore
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+  ui = auto
+[color "branch"]
+  current = red reverse
+  local = blue
+  remote = green
+[color "diff"]
+  meta = yellow
+  frag = magenta
+  old = red bold
+  new = green
+  plain = white
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+# - push/pull/diff/options -------------
+[branch]
+  autosetuprebase = always
+[diff]
+  tool = vimdiff
+  guitool = gvimdiff
+[difftool]
+  prompt = false
+[merge]
+  tool = vimdiff
+  guitool = gvimdiff
+[mergetool]
+  keepbackup = false
+  prompt = false
+[push]
+  default = upstream
+[pull]
+  default = current
+
+# - aliases ----------------------------
+[alias]
+  ai = add --interactive
+  as = rebase --interactive --autosquash
+  au = add --update
+  br = branch
+  bra = branch -ra
+  ca = commit --amend
+  cf = commit --fixup
+  ci = commit
+  cl = clone
+  cm = commit -m
+  cma = commit -a -m
+  co = checkout
+  cp = cherry-pick
+  cs = commit --squash
+  d = diff
+  dc = diff --cached
+  dlc = diff --cached HEAD^
+  dw = diff --word-diff
+  fa = fetch --all
+  fap = fetch --all --prune
+  fix = commit --amend -C HEAD
+  fl = log -u
+  gr = grep -Ii
+  grep = grep -Ii
+  lt = describe --tags --abbrev=0
+  mirror = "!for r in $( git mirrors ); do git push $r; done"
+  mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
+  noh = remote set-head origin -d
+  r = reset
+  r1 = reset HEAD^
+  r2 = reset HEAD^^
+  ra = rebase --abort
+  rc = rebase --continue
+  rh = reset --hard
+  rh1 = reset HEAD^ --hard
+  rh2 = reset HEAD^^ --hard
+  ri = rebase --interactive
+  rs = rebase --skip
+  sf = show --pretty="format:" --name-only
+  sa = stash apply
+  sl = stash list
+  sp = stash pop
+  ss = stash save
+  st = status
+
+# - list log --------------------------------------
+  l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
+  ll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --branches --tags
+  lll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --all
+
+  le = log --oneline --decorate
+  lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
+
+  ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  lds = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph
+
+  ls1 = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+  ls2 = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
