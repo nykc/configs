@@ -1,0 +1,243 @@
+"============================================================================
+" VIM CONFIGURATION FILE
+"
+" Version: 5.0.00 | 2016-06-19
+" Author: Derek Ackley
+" Github: https://github.com/nykc
+" File Location: ~/.vimrc
+"============================================================================
+
+"-- Main / Behaviours -------------------------------------------------------
+set nocompatible
+set background=dark
+
+"-- Files & Directories -----------------------------------------------------
+set nobackup            " do not make backups
+set noswapfile          " no swapfile
+
+"-- General & UI Settings ---------------------------------------------------
+colorscheme solarized   " set the colorscheme
+
+set cursorcolumn       " highlights the current column
+set cursorline         " highlights the current line
+
+set fileformats=unix,mac
+set backspace=indent,eol,start
+set lazyredraw          " redraw only when needed
+set ls=2                " always show the statusline
+set mouse=a             " use mouse everywhere
+set noerrorbells        " don't make a noise
+set number              " show line numbers by default
+set ruler               " show current position along the bottom
+set scrolloff=999       " keep the cursor vertically centered
+set showcmd             " show command being typed
+set showmode            " display mode (INSERT/REPLACE/etc.)
+set title               " display name of file being edited
+
+"-- Searching ---------------------------------------------------------------
+set ignorecase          " case insensitive searching by default
+set incsearch           " show search matches while typing
+set hlsearch            " highlight search results
+set smartcase           " case insensitive if using capital letter
+set wrapscan            " wrap around file when searching
+
+"-- Statusline when not using vim-airline -----------------------------------
+"set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[ASCII=\%03.3b]\[HEX=\%02.2B]\ [WC:%{WordCount()}][POS=%04l,%04v][%p%%]\[LEN=%L]
+"set viminfo='20,\"100,:20,%,n~/.viminfo"
+
+"-- Text Formatting & Layout Settings ---------------------------------------
+set autoindent          " always set autoindenting on
+set copyindent          " copy the previous indentation on autoindenting
+set nocindent           " turn off c indenting
+set nowrap              " turn off line wrapping
+set showmatch           " show matching bracket [{(<>)}]
+set smartindent         " extra level of indentation in some cases
+set smarttab            " insert tabs start of line according to shiftwidth
+set spellsuggest=5      " limit spell suggest to top 5 words
+
+"-- Wildmenu ----------------------------------------------------------------
+set wildmenu            " make tab completion for file buffers act like bash
+set wildmode=list:longest,full
+set wildignore=*.dll,*.o*.obj,*.bak,*.exe,*.pyc,\*.jpg,*.gif,*.png
+
+"============================================================================
+" AUTOCOMMANDS & INDENTATION
+"============================================================================
+set ts=4 sts=4 sw=4 expandtab   " default indentation 4 spaces
+
+" only do this part when compiled with support for autocommands
+if has("autocmd")
+    filetype on
+
+    " customizations based on house style
+    autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType scss setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab
+endif
+
+
+"============================================================================
+" CUSTOM FILETYPE SETTINGS
+"============================================================================
+autocmd! BufNewFile * silent! or ~/.vim/templates/%:e.tpl
+
+" create a file in ftplugin/filetype.vim for specific settings
+au BufRead,BufNewFile,BufReadPost *.text,*.txt set filetype=text
+au BufRead,BufNewFile,BufReadPost *.md set filetype=markdown
+au BufRead,BufNewFile,BufReadPost *.jade set filetype=pug
+au BufRead,BufNewFile,BufReadPost *.pug set filetype=pug
+au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
+
+"============================================================================
+" CUSTOM KEYMAPPINGS
+"============================================================================
+let mapleader=","
+
+nmap <leader>dos :%s/\r//g
+nmap <leader>e :NERDTreeToggle<cr>
+nmap <leader>l :set list!<cr>
+nmap <leader>md :%! /usr/local/bin/markdown/ --html4tags <cr>
+nmap <leader>mds :%! /usr/local/bin/markdown/ --html4tags <cr>:saveas %:r.html<cr>
+nmap <leader>s :setlocal spell! spelllang=en_us<cr>
+nmap <leader>sn :set nopaste<cr>
+nmap <leader>sp :set paste<cr>
+nmap <leader>rw :%s/\s\+$//e
+nmap <leader>ww :set wrap!<cr>
+nmap <leader><space> :nohlsearch<cr>
+
+" Enable copy/paste functionality
+vmap <C-c> "+yi
+vmap <C-x> #+c
+vmap <C-v> c<ESC>"+p
+imap <C-v> <ESC>"+pa
+
+" Quickly edit/reload the vimrc file
+nmap <silent><leader>ev :vsplit $MYVIMRC<cr>
+nmap <silent><leader>sv :so $MYVIMRC<cr>
+
+nnoremap <silent><F5> :call <SID>StripTrailingWhiteSpaces()<cr>
+
+map <F6> :setlocal nonumber!<cr>
+
+"============================================================================
+" HIGHLIGHTING & PLUGIN SETTINGS
+"============================================================================
+syntax on
+
+set list listchars=trail:_
+set listchars=tab:·\ ,trail:·,extends:»,precedes:«
+":highlight SpecialKey ctermfg=darkgrey ctermbg=yellow
+
+"-------------------------------------------
+" don't show tabs in html,xml
+"-------------------------------------------
+autocmd filetype html,xml set listchars-=tab:>.
+
+"-------------------------------------------
+" remove bracket highlighting
+"-------------------------------------------
+let g:loaded_matchparen = 1
+
+"-------------------------------------------
+" syntastic - chain multiple php checkers
+"-------------------------------------------
+let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+
+"-------------------------------------------
+" nerdtree - tabs open on console startup
+"-------------------------------------------
+let g:nerdtree_tabs_open_on_console_startup=0
+
+"-------------------------------------------
+" vim-pencil settings
+"-------------------------------------------
+let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
+
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init({'wrap': 'hard'})
+augroup END
+
+"=============================================================================
+" VIM FUNCTIONS
+"=============================================================================
+function! <SID>StripTrailingWhiteSpaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
+function! WordCount()
+   let s:old_status = v:statusmsg
+   let position = getpos(".")
+   exe ":silent normal g\<c-g>"
+   let stat = v:statusmsg
+   let s:word_count = 0
+   if stat != '--No lines in buffer--'
+     let s:word_count = str2nr(split(v:statusmsg)[11])
+     let v:statusmsg = s:old_status
+   end
+   call setpos('.', position)
+   return s:word_count
+endfunction
+
+function! WordProcessorMode()
+  set nonumber
+  set tw=80
+  set formatoptions=1
+  set noexpandtab
+  set wrap
+  set spell spelllang=en_us
+  set linebreak
+  set nolist
+  set complete+=s
+  set formatprg=par
+endfunction
+com! WP call WordProcessorMode()
+
+"============================================================================
+" VIM PLUG SETUP & CONFIGS
+"============================================================================
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'altercation/vim-colors-solarized'
+Plug 'bling/vim-airline'
+Plug 'godlygeek/tabular'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'junegunn/goyo.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'reedes/vim-pencil'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+
+" experimental Plugins
+
+" all of your plugins must be added before the following line
+call plug#end()
+
+" brief help
+" :PlugList             - list configured bundles
+" :PlugInstall(!)       - install(update) bundles
+" :PlugSearch(!) foo    - search(or refresh cache first) for foo
+" :PlugClean(!)         - confirm(or auto-approve) removal of unused bundles
+"
+" NOTE: comments after Plug command not allowed..
