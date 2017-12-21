@@ -1,7 +1,7 @@
 # ===================================================================
 #
 # Git-Config File
-# Version: 1.2.00 | 20141111
+# Version: 1.2.01 | 20171221
 # Author: Derek Ackley
 # Company: Nykc Studios
 # Twitter: @nykc77
@@ -88,6 +88,7 @@
   mirror = "!for r in $( git mirrors ); do git push $r; done"
   mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
   noh = remote set-head origin -d
+  pushall = "!git remote | xargs -L1 git push --all"
   r = reset
   r1 = reset HEAD^
   r2 = reset HEAD^^
