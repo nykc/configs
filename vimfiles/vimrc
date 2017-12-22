@@ -1,7 +1,7 @@
 "============================================================================
 " VIM CONFIGURATION FILE
 "
-" Version: 5.0.00 | 2016-06-19
+" Version: 5.1.00 | 2017-12-22
 " Author: Derek Ackley
 " Github: https://github.com/nykc
 " File Location: ~/.vimrc
@@ -33,6 +33,7 @@ set scrolloff=999       " keep the cursor vertically centered
 set showcmd             " show command being typed
 set showmode            " display mode (INSERT/REPLACE/etc.)
 set title               " display name of file being edited
+set clipboard+=unnamed
 
 "-- Searching ---------------------------------------------------------------
 set ignorecase          " case insensitive searching by default
@@ -73,7 +74,8 @@ if has("autocmd")
     autocmd FileType html setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
     autocmd FileType scss setlocal ts=2 sts=2 sw=2 expandtab
-    autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab
+    autocmd FileType php setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
 endif
 
 
@@ -217,6 +219,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/goyo.vim'

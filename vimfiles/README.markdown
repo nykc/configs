@@ -2,27 +2,51 @@
 ---
 .vimrc file - updated as new configurations are added.
 
+## New installation
+
+Download plug.vim and put in the "autoload" directory.
+
+    mkdir -p ~/.vim/autoload/
+    wget -c https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    mv plug.vim ~/.vim/autoload/
+
+open up vim, if the plug commands didn't install automatically run
+
+    :PlugInstall!
+
 ## Updating current .vimrc
-// TODO
+Make sure your local repo is up to date. (git pull origin master)
 
-## Quick Installation
-// REDO - currently broken
+or paste in a terminal:
 
-You can use the install-vimfiles.sh script or skip to the section below to
-install manually. For quick installation type or paste the following command in
-your terminal. This will copy over the appropriate directories and update the
-.vimrc with the current version on my github.
+    curl -kL https://raw.githubusercontent.com/nykc/configs/master/vimfiles/update_vimrc.sh | bash
 
-curl -kL https://raw.github.com/nykc/vimfiles/master/install-vimfiles.sh | bash
+## Post Installation
+After copying over the .vimrc file, be sure to run the post_install.sh script,
+this will copy over some files necessary for the .vimrc plugins to work correctly.
 
-## Plugin Installation
-// TODO
+    curl -kL https://raw.githubusercontent.com/nykc/configs/master/vimfiles/post_install.sh | bash
+
+## Manual Installation
+To manually copy over the files the post_install.sh script handles, you will need to create
+a few directories. Open up your terminal and enter the following commands:
+
+    mkdir -p ~/.vim/colors ~/.vim/ftplugin
+
+Then copy execute the following commands in terminal:
+
+    cp ~/.vim/plugged/vim-colors-solarized/colors/solarized.vim ~/.vim/colors
+    wget -c https://raw.githubusercontent.com/nykc/configs/master/vimfiles/ftplugin/markdown.vim
+    wget -c https://raw.githubusercontent.com/nykc/configs/master/vimfiles/ftplugin/text.vim
+    mv markdown.vim text.vim ~/.vim/ftplugin/ 
+
 
 ## Changelog
 
 *About versioning: going forward the versioning scheme will follow the (MMP)
 major update, minor update, patch format. x.x.xx - starting with version 4.0.00*
 
+- Version: 5.1.00 | 2017-12-22 : editor-config plugin, minor updates
 - Version: 5.0.00 | 2016-06-19 : rewrite of vimrc, refactoring and optimization
 - Version: 4.4.00 | 2016-06-13 : removed vundle to use vim-plug
 - Version: 4.3.01 | 2016-06-12 : solarized colorscheme was not working
