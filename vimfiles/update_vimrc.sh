@@ -2,7 +2,7 @@
 
 cd "$HOME/Downloads"
 
-wget -c https://github.com/nykc/vimfiles/raw/master/vimrc
+wget -c https://raw.githubusercontent.com/nykc/configs/master/vimfiles/vimrc
 echo "Updating .vimrc"
 sudo mv vimrc ~/.vimrc
 
