@@ -1,7 +1,7 @@
 "============================================================================
 " VIM CONFIGURATION FILE
 "
-" Version: 5.1.00 | 2017-12-22
+" Version: 5.1.01 | 2018-02-17
 " Author: Derek Ackley
 " Github: https://github.com/nykc
 " File Location: ~/.vimrc
@@ -162,6 +162,15 @@ augroup pencil
   autocmd FileType text         call pencil#init({'wrap': 'hard'})
 augroup END
 
+"------------------------------------------
+" vimdiff configs
+"------------------------------------------
+
+if &diff
+    colorscheme elflord
+    set diffopt+=iwhite
+endif
+
 "=============================================================================
 " VIM FUNCTIONS
 "=============================================================================
@@ -223,6 +232,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/goyo.vim'
+Plug 'mattn/emmet-vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'reedes/vim-pencil'
 Plug 'scrooloose/nerdtree'
