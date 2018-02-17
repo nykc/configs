@@ -1,7 +1,7 @@
 "============================================================================
 " VIM CONFIGURATION FILE
 "
-" Version: 5.1.01 | 2018-02-17
+" Version: 5.2.00 | 2018-02-17
 " Author: Derek Ackley
 " Github: https://github.com/nykc
 " File Location: ~/.vimrc
@@ -152,6 +152,11 @@ let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 let g:nerdtree_tabs_open_on_console_startup=0
 
 "-------------------------------------------
+" vim-airline settings
+"-------------------------------------------
+let g:airline_solarized_bg='dark'
+
+"-------------------------------------------
 " vim-pencil settings
 "-------------------------------------------
 let g:pencil#wrapModeDefault = 'soft'   " default is 'hard'
@@ -227,7 +232,6 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'altercation/vim-colors-solarized'
-Plug 'bling/vim-airline'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -241,6 +245,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " experimental Plugins
 
