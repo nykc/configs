@@ -46,6 +46,7 @@ Then copy execute the following commands in terminal:
 *About versioning: going forward the versioning scheme will follow the (MMP)
 major update, minor update, patch format. x.x.xx - starting with version 4.0.00*
 
+- Version: 6.0.00 | 2018-02-18 : Added code folding, refactored vimrc
 - Version: 5.2.00 | 2018-02-17 : Plug cleanup, install vim-airline-themes
 - Version: 5.1.01 | 2018-02-17 : vimdiff colorscheme, ignore whitespace
 - Version: 5.1.00 | 2017-12-22 : editor-config plugin, minor updates

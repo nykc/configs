@@ -1,25 +1,33 @@
 "============================================================================
 " VIM CONFIGURATION FILE
 "
-" Version: 5.2.00 | 2018-02-17
+" Version: 6.0.00 | 2018-02-18
 " Author: Derek Ackley
 " Github: https://github.com/nykc
 " File Location: ~/.vimrc
 "============================================================================
 
-"-- Main / Behaviours -------------------------------------------------------
+"-- Main / Behaviours {{{
 set nocompatible
 set background=dark
+" }}}
 
-"-- Files & Directories -----------------------------------------------------
-set nobackup            " do not make backups
-set noswapfile          " no swapfile
+"-- Files & Directories {{{
+set nobackup             " do not make backups
+set noswapfile           " no swapfile
+"}}}
 
-"-- General & UI Settings ---------------------------------------------------
-colorscheme solarized   " set the colorscheme
+"-- Colors {{{
+if !exists("g:syntax_on")
+    syntax enable
+endif
 
-set cursorcolumn       " highlights the current column
-set cursorline         " highlights the current line
+colorscheme solarized    " set the colorscheme
+" }}}
+
+"-- General & UI Settings {{{
+set cursorcolumn        " highlights the current column
+set cursorline          " highlights the current line
 
 set fileformats=unix,mac
 set backspace=indent,eol,start
@@ -30,23 +38,25 @@ set noerrorbells        " don't make a noise
 set number              " show line numbers by default
 set ruler               " show current position along the bottom
 set scrolloff=999       " keep the cursor vertically centered
-set showcmd             " show command being typed
-set showmode            " display mode (INSERT/REPLACE/etc.)
+set showcmd             " display mode (INSERT/REPLACE/etc.)
 set title               " display name of file being edited
-set clipboard+=unnamed
+set clipboard=unnamed
+" }}}
 
-"-- Searching ---------------------------------------------------------------
+"-- Searching  {{{
 set ignorecase          " case insensitive searching by default
 set incsearch           " show search matches while typing
 set hlsearch            " highlight search results
 set smartcase           " case insensitive if using capital letter
 set wrapscan            " wrap around file when searching
+" }}}
 
-"-- Statusline when not using vim-airline -----------------------------------
+"-- Statusline when not using vim-airline {{{
 "set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[ASCII=\%03.3b]\[HEX=\%02.2B]\ [WC:%{WordCount()}][POS=%04l,%04v][%p%%]\[LEN=%L]
 "set viminfo='20,\"100,:20,%,n~/.viminfo"
+" }}}
 
-"-- Text Formatting & Layout Settings ---------------------------------------
+"-- Text formatting & Layout Settings {{{
 set autoindent          " always set autoindenting on
 set copyindent          " copy the previous indentation on autoindenting
 set nocindent           " turn off c indenting
@@ -55,16 +65,30 @@ set showmatch           " show matching bracket [{(<>)}]
 set smartindent         " extra level of indentation in some cases
 set smarttab            " insert tabs start of line according to shiftwidth
 set spellsuggest=5      " limit spell suggest to top 5 words
+" }}}
 
-"-- Wildmenu ----------------------------------------------------------------
+"-- Folding {{{
+set foldmethod=indent   " fold based on indent level
+set foldnestmax=10      " max 10 depth
+set foldenable        " don't fold files by default
+set foldlevel=2         " start with foldlevel 2
+" }}}
+
+"-- Wildmenu {{{
 set wildmenu            " make tab completion for file buffers act like bash
 set wildmode=list:longest,full
 set wildignore=*.dll,*.o*.obj,*.bak,*.exe,*.pyc,\*.jpg,*.gif,*.png
+" }}}
 
-"============================================================================
-" AUTOCOMMANDS & INDENTATION
-"============================================================================
-set ts=4 sts=4 sw=4 expandtab   " default indentation 4 spaces
+"-- Autocommands & Indentation {{{
+set expandtab
+set modelines=1
+set shiftwidth=4
+set softtabstop=4   " 4 space tab
+set tabstop=4       " 4 space tab default
+
+filetype indent on
+filetype plugin on
 
 " only do this part when compiled with support for autocommands
 if has("autocmd")
@@ -78,10 +102,9 @@ if has("autocmd")
     autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
 endif
 
+" }}}
 
-"============================================================================
-" CUSTOM FILETYPE SETTINGS
-"============================================================================
+"-- Custom Filetype Settings {{{
 autocmd! BufNewFile * silent! or ~/.vim/templates/%:e.tpl
 
 " create a file in ftplugin/filetype.vim for specific settings
@@ -91,9 +114,9 @@ au BufRead,BufNewFile,BufReadPost *.jade set filetype=pug
 au BufRead,BufNewFile,BufReadPost *.pug set filetype=pug
 au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
 
-"============================================================================
-" CUSTOM KEYMAPPINGS
-"============================================================================
+" }}}
+
+"-- Custom Keymappings {{{
 let mapleader=","
 
 nmap <leader>dos :%s/\r//g
@@ -121,12 +144,9 @@ nmap <silent><leader>sv :so $MYVIMRC<cr>
 nnoremap <silent><F5> :call <SID>StripTrailingWhiteSpaces()<cr>
 
 map <F6> :setlocal nonumber!<cr>
+" }}}
 
-"============================================================================
-" HIGHLIGHTING & PLUGIN SETTINGS
-"============================================================================
-syntax on
-
+"-- Highlighting & Plugin Settings {{{
 set list listchars=trail:_
 set listchars=tab:·\ ,trail:·,extends:»,precedes:«
 ":highlight SpecialKey ctermfg=darkgrey ctermbg=yellow
@@ -167,18 +187,16 @@ augroup pencil
   autocmd FileType text         call pencil#init({'wrap': 'hard'})
 augroup END
 
-"------------------------------------------
-" vimdiff configs
-"------------------------------------------
+" }}}
 
+"-- Vimdiff configs {{{
 if &diff
     colorscheme elflord
     set diffopt+=iwhite
 endif
+" }}}
 
-"=============================================================================
-" VIM FUNCTIONS
-"=============================================================================
+"-- Vim Functions {{{
 function! <SID>StripTrailingWhiteSpaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
@@ -219,10 +237,9 @@ function! WordProcessorMode()
 endfunction
 com! WP call WordProcessorMode()
 
-"============================================================================
-" VIM PLUG SETUP & CONFIGS
-"============================================================================
+" }}}
 
+"-- Vim Plug Setup & Configs {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -260,3 +277,7 @@ call plug#end()
 " :PlugClean(!)         - confirm(or auto-approve) removal of unused bundles
 "
 " NOTE: comments after Plug command not allowed..
+
+" }}}
+
+" vim:foldmethod=marker:foldlevel=0
