@@ -1,49 +1,46 @@
-"============================================================================
+" ============================================================================
 " VIM CONFIGURATION FILE
 "
-" Version: 7.0.00 | 2018-09-02
+" Version: 8.0.00 | 2019-02-06
 " Author: Derek Ackley
 " Gitlab: https://gitlab.com/nykc/configs/raw/master/vimfiles/vimrc
 " File Location: ~/.vimrc
-"============================================================================
+" ============================================================================
 
-"============================================================================
-" MAIN BEHAVIOURS
-"============================================================================
+" ============================================================================
+" General Settings
+" ============================================================================
 set nocompatible
 set background=dark
 
-set nobackup             " do not make backups
-set noswapfile           " no swapfile
+set nobackup                " do not make backups
+set noswapfile              " no swapfile
 
-"============================================================================
-" COLOR SETTINGS
-"============================================================================
 if !exists("g:syntax_on")
     syntax enable
 endif
 
-colorscheme solarized    " set the color scheme
-"colorscheme desert      " set the color scheme
+colorscheme solarized           " set the colorscheme
 
-"============================================================================
-" GENERAL CONFIGS & UI SETTINGS
-"============================================================================
-set autoread            " automatically re-read files if unmodified
+filetype plugin indent on       " enable filetype/indent/plugins
+
+set autoread                " automatically re-read files if unmodified
+set encoding=utf-8          " character encoding
+set spelllang=en_us         " set default dictionary
 set backspace=indent,eol,start
 set clipboard=unnamed
-set cursorcolumn        " highlights the current column
-set cursorline          " highlights the current line
+set cursorcolumn            " highlights the current column
+set cursorline              " highlights the current line
 set fileformats=unix,mac
-set history=1000        " set bigger history of executed commands
-set lazyredraw          " redraw only when needed
-set mouse=a             " use mouse everywhere
-set noerrorbells        " don't make a noise
-set number              " show line numbers by default
-set ruler               " show current position along the bottom
-set scrolloff=999       " keep the cursor vertically centered
-set showcmd             " display mode (INSERT/REPLACE/etc.)
-set title               " display name of file being edited
+set history=1000            " set bigger history of executed commands
+set lazyredraw              " redraw only when needed
+set mouse=a                 " use mouse everywhere
+set noerrorbells            " don't make a noise
+set number                  " show line numbers by default
+set ruler                   " show current position along the bottom
+set scrolloff=999           " keep the cursor vertically centered
+set showcmd                 " display mode (INSERT/REPLACE/etc.)
+set title                   " display name of file being edited
 
 " searching ----------------------------------------------------------------
 set hlsearch            " highlight search results
@@ -62,19 +59,16 @@ set smartindent         " extra level of indentation in some cases
 set smarttab            " insert tabs start of line according to shiftwidth
 set spellsuggest=5      " limit spell suggest to top 5 words
 
-" statusline settings ------------------------------------------------------
-set ls=2                " always show the statusline
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\[TYPE=%Y]\[ASCII=\%03.3b]\[HEX=\%02.2B]\ [WC:%{WordCount()}][POS=%04l,%04v][%p%%]\[LEN=%L]
-set viminfo='20,\"100,:20,%,n~/.viminfo"
-
 " wildmenu -----------------------------------------------------------------
 set wildmenu            " make tab completion for file buffers act like bash
-set wildmode=list:longest,full
+set wildmode=list:longest:full
+set wildignorecase
 set wildignore=*.dll,*.o*.obj,*.bak,*.exe,*.pyc,\*.jpg,*.gif,*.png
 
-"============================================================================
-" AUTOCOMMANDS & INDENTATION
-"============================================================================
+
+" ============================================================================
+" Autocommands & Indentation
+" ============================================================================
 set expandtab
 set modelines=1
 set shiftwidth=4
@@ -96,9 +90,43 @@ if has("autocmd")
     autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
 endif
 
-"============================================================================
-" CUSTOM FILETYPE SETTINGS
-"============================================================================
+" custom status line colors -------------------------------------------------
+
+hi User1 ctermfg=007 ctermbg=239
+hi User2 ctermfg=007 ctermbg=236
+hi User3 ctermfg=236 ctermbg=236
+hi User4 ctermfg=239 ctermbg=239
+
+
+" ============================================================================
+" Status Line
+" ============================================================================
+set laststatus=2                                     " enable the statusline
+
+set statusline=
+set statusline+=%0*\ %n\                             " buffer number
+set statusline+=%1*\ %t%m%r%h%w\                     " shortname + flags
+"set statusline+=%1*\ %<%F%m%r%h%w\                  " filename, modified, readonly, helpfile, preview
+set statusline+="%3*%m"                              " modified flag
+set statusline+=%3*│                                 " separator
+set statusline+=%2*\ %Y\                             " fileType
+set statusline+=%3*│                                 " separator
+set statusline+=%2*\ %{GitBranch()}\                 " current git branch
+set statusline+=%3*│                                 " separator
+set statusline+=%2*\ %{''.(&fenc!=''?&fenc:&enc).''} " encoding
+set statusline+=\ (%{&ff})                           " file format (dos/unix..)
+set statusline+=\                                    " blank space
+set statusline+=%=                                   " right Side
+set statusline+=WC:%{WordCount()}\                   " word count
+set statusline+=%3*│                                 " separator
+set statusline+=%2*\ COL:\ %02v\                     " column number
+set statusline+=%3*│                                 " separator
+set statusline+=%1*\ LN:\ %02l/%L\ (%2p%%)\          " line no. / tot lines, percent
+
+
+" ============================================================================
+" Custom Filetype Settings
+" ============================================================================
 autocmd! BufNewFile * silent! or ~/.vim/templates/%:e.tpl
 
 " create a file in ftplugin/filetype.vim for specific settings
@@ -108,9 +136,10 @@ au BufRead,BufNewFile,BufReadPost *.jade set filetype=pug
 au BufRead,BufNewFile,BufReadPost *.pug set filetype=pug
 au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
 
-"============================================================================
-" CUSTOM KEY MAPPINGS
-"============================================================================
+
+" ============================================================================
+" Custom Key Mappings
+" ============================================================================
 let mapleader=","
 
 nmap <leader>dos :%s/\r//g
@@ -130,9 +159,7 @@ imap <C-v> <ESC>"+pa
 nmap <silent><leader>ev :vsplit $MYVIMRC<cr>
 nmap <silent><leader>sv :so $MYVIMRC<cr>
 
-"============================================================================
-" HIGHLIGHTING & PLUGIN SETTINGS
-"============================================================================
+" highlighting --------------------------------------------------------------
 set list listchars=trail:_
 set listchars=tab:·\ ,trail:·,extends:»,precedes:«
 ":highlight SpecialKey ctermfg=darkgrey ctermbg=yellow
@@ -143,34 +170,74 @@ autocmd filetype html,xml set listchars-=tab:>.
 " remove bracket highlighting -----------------------------------------------
 let g:loaded_matchparen = 1
 
-"============================================================================
-" VIMDIFF CONFIGS
-"============================================================================
+
+" ===========================================================================
+" Vim-diff configs
+" ============================================================================
 if &diff
     colorscheme elflord
     set diffopt+=iwhite
 endif
 
-"============================================================================
-" VIM FUNCTIONS
-"============================================================================
+
+" ============================================================================
+" Functions
+" ============================================================================
 function! WordCount()
-   let s:old_status = v:statusmsg
-   let position = getpos(".")
-   exe ":silent normal g\<c-g>"
-   let stat = v:statusmsg
-   let s:word_count = 0
-   if stat != '--No lines in buffer--'
-     let s:word_count = str2nr(split(v:statusmsg)[11])
-     let v:statusmsg = s:old_status
-   end
-   call setpos('.', position)
-   return s:word_count
+    let s:old_status = v:statusmsg
+    let position = getpos(".")
+    exe ":silent normal g\<c-g>"
+    let stat = v:statusmsg
+    let s:word_count = 0
+    if stat != '--No lines in buffer--'
+      let s:word_count = str2nr(split(v:statusmsg)[11])
+      let v:statusmsg = s:old_status
+    end
+    call setpos('.', position)
+    return s:word_count
 endfunction
 
-"============================================================================
-" VIM PLUG SETUP & CONFIGS
-"============================================================================
+" Fetch the git branch of the current file, if applicable
+function! GitBranch() abort
+    let l:branchname = system("git rev-parse --abbrev-ref HEAD 2>/dev/null
+        \ | tr -d '\n'")
+    return strlen(l:branchname) > 0 ? '#'.l:branchname : ''
+endfunction
+
+
+" ============================================================================
+" Plugin Settings
+" ============================================================================
+
+" ALE settings ------------------------------------------------------------
+" let g:ale_open_list = 1
+" let g:ale_list_window_size = 5
+
+" let g:ale_lint_on_text_changed = 0
+" let g:ale_lint_on_enter = 0
+" let g:ale_lint_on_save = 1
+
+" Emmet settings ------------------------------------------------------------
+let g:user_emmet_leader_key=','     " ,, will trigger emmet
+
+" Syntastic Plugin Settings -------------------------------------------------
+
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_loc_list_height = 5
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 1
+" let g:syntastic_javascript_checkers = ['eslint']
+
+" highlight link SyntasticErrorSign SignColumn
+" highlight link SyntasticWarningSign SignColumn
+" highlight link SyntasticStyleErrorSign SignColumn
+" highlight link SyntasticStyleWarningSign SignColumn
+
+
+" ============================================================================
+" Vim Plug Setup & Configs
+" ============================================================================
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -180,14 +247,18 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'altercation/vim-colors-solarized'
-Plug 'editorconfig/editorconfig'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'mattn/emmet-vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
-" experimental Plugins
+
+" experimental Plugins -------------------------------------------------------
+"Plug 'w0rp/ale'
+"Plug 'vim-syntastic/syntastic'
+
 
 " all of your plugins must be added before the following line
 call plug#end()
