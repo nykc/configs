@@ -1,7 +1,7 @@
 " ============================================================================
 " VIM CONFIGURATION FILE
 "
-" Version: 8.0.00 | 2019-02-06
+" Version: 8.0.01 | 2019-08-01
 " Author: Derek Ackley
 " Gitlab: https://gitlab.com/nykc/configs/raw/master/vimfiles/vimrc
 " File Location: ~/.vimrc
@@ -20,7 +20,8 @@ if !exists("g:syntax_on")
     syntax enable
 endif
 
-colorscheme solarized           " set the colorscheme
+set termguicolors               " set terminal gui colors
+colorscheme solarized8           " set the colorscheme
 
 filetype plugin indent on       " enable filetype/indent/plugins
 
@@ -209,31 +210,8 @@ endfunction
 " Plugin Settings
 " ============================================================================
 
-" ALE settings ------------------------------------------------------------
-" let g:ale_open_list = 1
-" let g:ale_list_window_size = 5
-
-" let g:ale_lint_on_text_changed = 0
-" let g:ale_lint_on_enter = 0
-" let g:ale_lint_on_save = 1
-
 " Emmet settings ------------------------------------------------------------
 let g:user_emmet_leader_key=','     " ,, will trigger emmet
-
-" Syntastic Plugin Settings -------------------------------------------------
-
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_loc_list_height = 5
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 1
-" let g:syntastic_javascript_checkers = ['eslint']
-
-" highlight link SyntasticErrorSign SignColumn
-" highlight link SyntasticWarningSign SignColumn
-" highlight link SyntasticStyleErrorSign SignColumn
-" highlight link SyntasticStyleWarningSign SignColumn
-
 
 " ============================================================================
 " Vim Plug Setup & Configs
@@ -246,8 +224,8 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'altercation/vim-colors-solarized'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'lifepillar/vim-solarized8'
 Plug 'mattn/emmet-vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
@@ -256,8 +234,6 @@ Plug 'tpope/vim-surround'
 
 
 " experimental Plugins -------------------------------------------------------
-"Plug 'w0rp/ale'
-"Plug 'vim-syntastic/syntastic'
 
 
 " all of your plugins must be added before the following line

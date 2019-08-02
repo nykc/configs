@@ -46,6 +46,7 @@ Then copy execute the following commands in terminal:
 *About versioning: going forward the versioning scheme will follow the (MMP)
 major update, minor update, patch format. x.x.xx - starting with version 4.0.00*
 
+- Version: 8.0.01 | 2019-08-01 : Switched solarized plugin to solarized8
 - Version: 8.0.00 | 2019-02-06 : Rebuilt status line, plugin modification
 - Version: 7.0.00 | 2018-09-02 : Removed plugins, new features, removed folding
 - Version: 6.0.00 | 2018-02-18 : Added code folding, refactored vimrc
