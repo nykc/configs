@@ -2,9 +2,11 @@ export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\] $
 # Tell ls to be colorful
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+export TERM=xterm-256color
 # Tell grep to highlight matches
 export GREP_OPTIONS='--color=auto'
 
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
@@ -14,5 +16,7 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
-source ~/.profile
+# source ~/.profile
+
+export PATH="/usr/local/sbin:$PATH"
 
