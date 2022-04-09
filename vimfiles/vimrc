@@ -1,7 +1,7 @@
 " ============================================================================
 " VIM CONFIGURATION FILE
 "
-" Version: 8.0.01 | 2019-08-01
+" Version: 8.0.02 | 2022-04-09
 " Author: Derek Ackley
 " Gitlab: https://gitlab.com/nykc/configs/raw/master/vimfiles/vimrc
 " File Location: ~/.vimrc
@@ -133,8 +133,6 @@ autocmd! BufNewFile * silent! or ~/.vim/templates/%:e.tpl
 " create a file in ftplugin/filetype.vim for specific settings
 au BufRead,BufNewFile,BufReadPost *.text,*.txt set filetype=text
 au BufRead,BufNewFile,BufReadPost *.md set filetype=markdown
-au BufRead,BufNewFile,BufReadPost *.jade set filetype=pug
-au BufRead,BufNewFile,BufReadPost *.pug set filetype=pug
 au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
 
 
@@ -146,7 +144,7 @@ let mapleader=","
 nmap <leader>dos :%s/\r//g
 nmap <leader>l :set list!<cr>
 nmap <leader>md :%! /usr/local/bin/markdown/ --html4tags <cr>
-nmap <leader>mds :%! /usr/local/bin/markdown/ --html4tags <cr>:saveas %:r.html<cr>
+nmap <leader>mds :%! /usr/local/bin/markdown/ --html4tags <cr>:saveas! %:r.html<cr>
 nmap <leader>rw :%s/\s\+$//e
 nmap <leader>ww :set wrap!<cr>
 
@@ -246,3 +244,4 @@ call plug#end()
 " :PlugClean(!)         - confirm(or auto-approve) removal of unused bundles
 "
 " NOTE: comments after Plug command not allowed..
+
