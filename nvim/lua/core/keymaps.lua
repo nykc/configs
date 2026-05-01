@@ -64,6 +64,13 @@ end, { desc = "Toggle relative numbers" })
 map("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 
 -- ====================================================
+-- Re-selects after Indenting
+-- stay in visual mode after indent
+-- ====================================================
+vim.keymap.set("v", "<", "<gv", { noremap = true })
+vim.keymap.set("v", ">", ">gv", { noremap = true })
+
+-- ====================================================
 -- Telescope
 -- ====================================================
 vim.keymap.set("n", "<leader>ff", function() require("telescope.builtin").find_files() end, { desc = "Find files" })
